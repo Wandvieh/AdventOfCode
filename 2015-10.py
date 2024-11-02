@@ -24,7 +24,7 @@ input = "1113122113"
 print(input)
 output = ""
 
-for i in range(50):
+for i in range(10):
     output = ""
     while input != "":
         first_char = input[0]
@@ -33,10 +33,11 @@ for i in range(50):
         output += str(length)
         output += first_char
         input = new_input
-    print("Iteration:", i)
+    #print("Iteration:", i)
     input = output
+    print(output)
 
-print(len(output)) # 360154 for 40 iterations, X for 50 iterations
+print(len(output)) # 360154 for 40 iterations, couldn't solve it myself for 50 iterations, see v2
 
 """--- Part Two ---
 

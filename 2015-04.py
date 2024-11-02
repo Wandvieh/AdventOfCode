@@ -16,7 +16,7 @@ Your puzzle input is ckczppom.
 import hashlib
 
 input = "ckczppom"
-number = 1
+number = 2913817
 
 while True:
     string = input + str(number)
@@ -27,7 +27,7 @@ while True:
         print(result.hexdigest())
         break
     number+=1
-    print(number) #117946 for 5 0's, only checked up to number 2913817 for 6 0's
+    print(number) #117946 for 5 0's, 3938038 for 6 o's
 
 """
 --- Part Two ---

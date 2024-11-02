@@ -28,6 +28,8 @@ What is the distance of the shortest route?
 import pandas as pd
 import numpy as np
 import re
+import timeit
+start = timeit.default_timer()
 
 cities = ["AlphaCentauri", "Snowdin", "Tambi", "Faerun", "Norrath", "Straylight", "Tristram", "Arbre"]
 with open('2015-09.txt', 'r') as f:  
@@ -81,6 +83,9 @@ print(shortest_distance) # 141
 print(visited_cities_shortest) # ['Tristram', 'AlphaCentauri', 'Norrath', 'Straylight', 'Faerun', 'Snowdin', 'Tambi', 'Arbre']
 print(longest_distance) # 736
 print(visited_cities_longest) # ['AlphaCentauri', 'Arbre', 'Tristram', 'Snowdin', 'Straylight', 'Tambi', 'Norrath', 'Faerun']
+
+stop = timeit.default_timer()
+print('Time: ', stop - start) # 3.7315396999474615
 
 """
 --- Part Two ---
