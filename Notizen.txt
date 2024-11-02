@@ -31,6 +31,5 @@ Annahme: Liste > 1
 > aktuellen Zähler auf den nächsten Ort setzen
 > Noch mehr punkte in der Liste? Dann Funktion nochmal aufrufen
 
-
 def main():
 > Führe Distanzberechnung durch (Ortsliste, 0, [], Distanzmatrix)
