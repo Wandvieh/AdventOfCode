@@ -41,18 +41,62 @@ Ignore any object (and all of its children) which has any property with the valu
     [1,"red",5] has a sum of 6, because "red" in an array has no effect.
 """
 
-red_objects = re.findall('\{[0-9a-z,:\s"-\[\]]*red[0-9a-z,:\s"-\[\]]*\}', input)
+"""red_objects = re.findall('\{[0-9a-z,:\s"-\[\]]*red[0-9a-z,:\s"-\[\]]*\}', input)
+print(red_objects)
 print(len(red_objects))
 
-"""for i in red_objects:
+for i in red_objects:
     for j in red_objects:
         if i in j:
             red_objects.remove(i)
 print(red_objects)
-print(len(red_objects))"""
+print(len(red_objects))
 
 red_objects_numbers = []
 for object in red_objects:
     red_objects_numbers.extend([int(item) for item in re.findall("-*[0-9]+", object)])
 #print(red_objects_numbers)
-print(sum(numbers) - sum(red_objects_numbers))
+print(sum(numbers) - sum(red_objects_numbers))"""
+
+import json
+
+def check_json(json, reds):
+    for entry in json:
+        if type(entry) is dict:
+            #print(entry)
+            #print("1", reds)
+            for key, value in entry.items():
+                check = False
+                if value == "red":
+                    #print(key)
+                    reds.append(entry)
+                    #print(reds)
+                    check = True
+                    #print("2", reds)
+                    break
+            #print("3", reds)
+            if check: continue
+            #print("4", reds)
+            for key, value in entry.items():
+                if type(value) is dict or type(value) is list:
+                    check_json(value, reds)
+            #print("5", reds)
+        if (type(entry)) is list:
+            for item in entry:
+                if type(item) is dict or type(item) is list:
+                    check_json(item, reds)
+    
+    #rint("6", reds)
+    return reds
+
+f = open("2015-12.txt", "r")
+x = json.loads(f.read())
+reds = []
+
+print(check_json(x, reds))
+
+input2 = json.dumps(reds)
+
+numbers2 = [int(item) for item in re.findall("-*[0-9]+", input2)]
+
+print(sum(numbers)-sum(numbers2))
