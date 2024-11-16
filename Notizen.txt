@@ -3,9 +3,12 @@
 > Json File
 
 For everything in the current level:
-    Check if it is an object
+    Check if it is a dict
         If yes: check to see if one of the values has "red" in it
             If yes: Write that object into a string (or the numbers in it), then continue with the next iteration
         If not: Check to see if it has further layers
             If yes: Go into that layer and call this function again
             If not: continue with the next iteration
+
+
+{"e":"red","c":-31,"a":-23,"g":-11,"b":25,"d":"green","f":"green"}

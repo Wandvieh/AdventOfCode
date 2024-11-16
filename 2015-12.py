@@ -17,14 +17,14 @@ You will not encounter any strings containing numbers.
 What is the sum of all numbers in the document?
 """
 
-"""import re
+import re
 
 f = open("2015-12.json", "r")
 input = f.read()
 
 numbers = [int(item) for item in re.findall("-*[0-9]+", input)]
 print(numbers)
-print(sum(numbers)) # 156366"""
+print(sum(numbers)) # 156366
 
 
 """
@@ -60,33 +60,34 @@ print(sum(numbers) - sum(red_objects_numbers))"""
 import json
 import re
 
+def check_dict_reds(dct, reds):
+    print("Checking dict")
+    for key, value in dct.items():
+        check = False
+        if value == "red":
+            reds.append(dct)
+            print("It's a red!")
+            check = True
+            break
+    print("Dict checked")
+    return reds, check
+
 def check_json(json, reds):
-    for entry in json:
-        if type(entry) is dict:
-            print(entry)
-            print("1", reds)
-            for key, value in entry.items():
-                check = False
-                if value == "red":
-                    #print(key)
-                    reds.append(entry)
-                    #print(reds)
-                    check = True
-                    print("2", reds)
-                    break
-            print("3", reds)
-            if check: continue
-            print("4", reds)
-            for key, value in entry.items():
-                if type(value) is dict or type(value) is list:
-                    check_json(value, reds)
-            print("5", reds)
-        if (type(entry)) is list:
-            for item in entry:
-                if type(item) is dict or type(item) is list:
-                    check_json(item, reds)
-    
-    print("6", reds)
+    if type(json) == list:
+        print("It's a list!")
+        for item in json:
+            if type(item) is dict or type(item) is list:
+                print("Going one step deeper")
+                reds = check_json(item, reds)
+        print("List checked", reds)
+    if type(json) == dict:
+        print("It's a dict!")
+        reds, check = check_dict_reds(json, reds)
+        if check: return reds
+        for key, value in json.items():
+            if type(value) is dict or type(value) is list:
+                print("Going one step deeper", value)
+                reds = check_json(value, reds)
     return reds
 
 test = [ {
@@ -99,12 +100,12 @@ f = open("2015-12.txt", "r")
 x = json.loads(f.read())
 reds = []
 
-reds = check_json(test, reds)
+reds = check_json(x, reds)
 
 input2 = json.dumps(reds)
 
 numbers2 = [int(item) for item in re.findall("-*[0-9]+", input2)]
 
-#print(sum(numbers)-sum(numbers2))
-print(numbers2)
-print(sum(numbers2))
+print(sum(numbers)-sum(numbers2)) # 96852
+#print(numbers2)
+#print(sum(numbers2))
