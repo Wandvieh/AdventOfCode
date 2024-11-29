@@ -49,3 +49,32 @@ for line in input:
 
 df = pd.DataFrame(data)
 print(df)
+
+# First get all combinations (List of Dictionaries)
+# Optional: Skip something when it produces a negative (zero) outcome
+def get_all_combinations(ingredients, allCombinations, currCombination, depth, counter):
+    for i in range(1, counter+1):
+        if depth == 1:
+            currCombination = []
+        if i == counter:
+            allCombinations.append([counter, 0, 0, 0])
+            return allCombinations, currCombination
+        if len(ingredients) == 1:
+            currCombination.append(4 - sum(currCombination))
+            #print(currCombination)
+            allCombinations.append(currCombination)
+            currCombination = currCombination[:-2]
+        else:
+            currCombination.append(i)
+            remainingIngredients = ingredients.copy()
+            remainingIngredients.remove(ingredients[0])
+            allCombinations, currCombination = get_all_combinations(remainingIngredients, allCombinations, currCombination, depth+1, counter)
+        #if depth == 1:
+        #    print(i)
+    
+
+# Then go through all dictionaries to find best solution
+
+counter = 5
+allCombinations, currCombination = get_all_combinations(["Sprinkles","Butterscotch","Chocolate","Candy"], [], [], 1, counter)
+#print(allCombinations)
