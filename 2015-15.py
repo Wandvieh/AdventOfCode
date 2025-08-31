@@ -34,47 +34,39 @@ import re
 import pprint
 import pandas as pd
 
-data = {}
-with open('2015-15.txt', 'r') as f:  
-    input = f.read().split('\n')
-for line in input:
-    name = re.findall("^[A-Za-z]+", line)[0]
-    data[name] = {}
-    data[name]["capacity"] = int(re.findall("capacity (-*[0-9]+)", line)[0])
-    data[name]["durability"] = int(re.findall("durability (-*[0-9]+)", line)[0])
-    data[name]["flavor"] = int(re.findall("flavor (-*[0-9]+)", line)[0])
-    data[name]["texture"] = int(re.findall("texture (-*[0-9]+)", line)[0])
-    data[name]["calories"] = int(re.findall("calories (-*[0-9]+)", line)[0])
-#pprint.pprint(data)
+def get_input():
+    data = pd.read_csv("2015-15.csv", index_col=0, encoding="utf-8")
+    return data
 
-df = pd.DataFrame(data)
-print(df)
+def compute_optimization(data):
+    a,b,c,d,e = 0,0,0,0,0
+    score=0
+    maximum=0
+    for i in range(0,100):
+        for j in range(0,100-i):
+            for k in range(0,100-i-j):
+                h = 100-i-j-k
+                a=data[0][0]*i+data[1][0]*j+data[2][0]*k+data[3][0]*h
+                if a<=0: continue
+                b=data[0][1]*i+data[1][1]*j+data[2][1]*k+data[3][1]*h
+                if b<=0: continue
+                c=data[0][2]*i+data[1][2]*j+data[2][2]*k+data[3][2]*h
+                if c<=0: continue
+                d=data[0][3]*i+data[1][3]*j+data[2][3]*k+data[3][3]*h
+                if d<=0: continue
+                e=data[0][4]*i+data[1][4]*j+data[2][4]*k+data[3][4]*h
+                
+                if e!=500:
+                    continue
 
-# First get all combinations (List of Dictionaries)
-# Optional: Skip something when it produces a negative (zero) outcome
-def get_all_combinations(ingredients, allCombinations, currCombination, depth, counter):
-    for i in range(1, counter+1):
-        if depth == 1:
-            currCombination = []
-        if i == counter:
-            allCombinations.append([counter, 0, 0, 0])
-            return allCombinations, currCombination
-        if len(ingredients) == 1:
-            currCombination.append(4 - sum(currCombination))
-            #print(currCombination)
-            allCombinations.append(currCombination)
-            currCombination = currCombination[:-2]
-        else:
-            currCombination.append(i)
-            remainingIngredients = ingredients.copy()
-            remainingIngredients.remove(ingredients[0])
-            allCombinations, currCombination = get_all_combinations(remainingIngredients, allCombinations, currCombination, depth+1, counter)
-        #if depth == 1:
-        #    print(i)
-    
+                score = a*b*c*d
+                maximum = max(score, maximum)
 
-# Then go through all dictionaries to find best solution
+    return maximum
 
-counter = 5
-allCombinations, currCombination = get_all_combinations(["Sprinkles","Butterscotch","Chocolate","Candy"], [], [], 1, counter)
-#print(allCombinations)
+def main():
+    data = get_input()
+    data = [[2,0,-2,0,3],[0,5,-3,0,3],[0,0,5,-1,8],[0,-1,0,5,8]]
+    print(compute_optimization(data))
+
+main()

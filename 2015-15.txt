@@ -2,3 +2,19 @@ Sprinkles: capacity 2, durability 0, flavor -2, texture 0, calories 3
 Butterscotch: capacity 0, durability 5, flavor -3, texture 0, calories 3
 Chocolate: capacity 0, durability 0, flavor 5, texture -1, calories 8
 Candy: capacity 0, durability -1, flavor 0, texture 5, calories 8
+
+Looking for the highest score
+Score is calculated by
+capacity * their amount
+    added for all capacities
+        multiplied together
+
+The multiplication at the end is the highest for when their numbers are in the middle rather some high and some low
+Each ingredient has two properties equaling 0, 1 positive and one negative property
+
+Each of the totals have to be positive, since negative and negative doesn't cancel each other out.
+So, there's some rules:
+Chocolate has to be higher than Sprinkles and Butterscotch combined
+Candy has to be at least 1/5th of Chocolate
+    -> Chocolate is the highest, so at least 26
+Butterscotch has to be at least 1/5th of Candy
